@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="计算机基础-后台开发。简单介绍一些后台开发中经常涉及的概念。">
+  <meta name="description" content="（大致完成）计算机基础-后台开发。简单介绍一些后台开发中经常涉及的概念。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机进阶-后台基础（待修改）">
+<meta property="og:title" content="计算机进阶-后台基础">
 <meta property="og:url" content="http://yoursite.com/6f326107b3dd/index.html">
 <meta property="og:site_name" content="mingch">
-<meta property="og:description" content="计算机基础-后台开发。简单介绍一些后台开发中经常涉及的概念。">
+<meta property="og:description" content="（大致完成）计算机基础-后台开发。简单介绍一些后台开发中经常涉及的概念。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-13T06:11:34.000Z">
-<meta property="article:modified_time" content="2020-11-15T10:32:47.687Z">
+<meta property="article:modified_time" content="2020-11-16T10:09:31.563Z">
 <meta property="article:author" content="明成">
 <meta property="article:tag" content="计算机基础">
 <meta property="article:tag" content="后台开发">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>计算机进阶-后台基础（待修改） | mingch</title>
+  <title>计算机进阶-后台基础 | mingch</title>
   
 
 
@@ -176,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          计算机进阶-后台基础（待修改）
+          计算机进阶-后台基础
         </h1>
 
         <div class="post-meta">
@@ -193,7 +193,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-15 18:32:47" itemprop="dateModified" datetime="2020-11-15T18:32:47+08:00">2020-11-15</time>
+                <time title="Modified: 2020-11-16 18:09:31" itemprop="dateModified" datetime="2020-11-16T18:09:31+08:00">2020-11-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,7 +206,7 @@
             </span>
 
           
-            <div class="post-description">计算机基础-后台开发。简单介绍一些后台开发中经常涉及的概念。</div>
+            <div class="post-description">（大致完成）计算机基础-后台开发。简单介绍一些后台开发中经常涉及的概念。</div>
 
         </div>
       </header>
@@ -220,13 +220,19 @@
         <h2 id="海量服务"><a href="#海量服务" class="headerlink" title="海量服务"></a>海量服务</h2><p>   现代互联网已经进入了海量服务时代。海量用户带来的海量数据对后台服务带来前所未有的挑战。</p>
 <p>   为海量用户提供及时、稳定、可靠的后台服务，是当今后台开发工程师的共同使命与愿景。</p>
 <hr>
-<h2 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h2><h3 id="高并发读的银弹：缓存"><a href="#高并发读的银弹：缓存" class="headerlink" title="高并发读的银弹：缓存"></a>高并发读的银弹：缓存</h3><p>浏览器缓存，CDN，网关缓存，负载均衡缓存、逻辑层缓存、存储层缓存，<br>http 1.0 if-modified<br>http 1.1 etag<br>http return code 304</p>
-<h3 id="穿透、击穿与雪崩"><a href="#穿透、击穿与雪崩" class="headerlink" title="穿透、击穿与雪崩"></a>穿透、击穿与雪崩</h3><ul>
-<li>如果缓存没有命中，去数据库查则称为穿透，为了避免重复查询不存在数据造成额外的消耗，可以将不存在数据也加入缓存</li>
-<li>如果 hot key 过期，造成大量数据查询落到数据库中，称为击穿；</li>
-<li>如果同一时刻大量缓存失效，导致大量查询落到数据库中，由此导致查询时间延长，服务阻塞并且请求总处理时间增长，最后服务超时。这种情况称为雪崩。</li>
-</ul>
-<h3 id="高并发写"><a href="#高并发写" class="headerlink" title="高并发写"></a>高并发写</h3><p>   对于写，只能尽量减少写的消耗。减少写的消耗的意思是，减少锁的争用。<br>   分库分表分区，将写操作的消耗尽量减少。<br>   如果写请求比较少，可以将操作放进消息队列中有序执行，如果短时间写请求较多，放弃数据库的强一致性而保证最终一致性。<br>   如果长时间写请求较多又没法处理，可以选择招聘一个架构师。</p>
+<h2 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h2><h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>缓存可以说是高并发读场景下的银弹。对于用户而言，缓存可以节省等待时间，节省数据流量；对于后台服务而言，合理利用缓存能够减少后台服务的压力，加快请求的处理时间，削减服务器成本，减少网络传输的消耗。</p>
+<p>常见的缓存有：浏览器缓存，CDN，网关缓存，负载均衡缓存、逻辑层缓存、存储层缓存等。</p>
+<blockquote>
+<p>HTTP 中的缓存：<br>HTTP 1.0 if-modified<br>HTTP 1.1 etag<br>HTTP return code 304</p>
+</blockquote>
+<p>后台服务中，如果没有及时更新缓存，就会出现缓存与数据库不一致的情况，此时的缓存的数据便成了脏数据。业界上通用的做法是，先删除缓存，再更新数据库，再删除缓存（延时双删）。</p>
+<blockquote>
+<p> 穿透、击穿与雪崩<br>(1) 如果缓存没有命中，去数据库查则称为穿透，为了避免重复查询不存在数据造成额外的消耗，可以将不存在数据也加入缓存。<br>(2) 如果 hot key 过期，造成大量数据查询落到数据库中，称为击穿；<br>(3) 如果同一时刻大量缓存失效，导致大量查询落到数据库中，由此导致查询时间延长，服务阻塞并且请求总处理时间增长，最后服务超时。这种情况称为雪崩。</p>
+</blockquote>
+<h3 id="高并发写"><a href="#高并发写" class="headerlink" title="高并发写"></a>高并发写</h3><p>   尽量减少写过程中锁的争用。为了保证数据的一致性，数据库的写操作一般要加锁。<br>   一般采取分库分表分区，将锁的消耗尽量减少。也可以采用读写分离。<br>   如果写请求比较少，可以将操作放进消息队列中有序执行，如果短时间写请求较多，放弃数据库的强一致性而保证最终一致性。<br>   如果确实消耗比较大，<strong>放弃数据库的强一致性而保证最终一致性</strong>。</p>
+<blockquote>
+<p>如果长时间写请求较多又没法处理，可以选择招聘一个架构师。</p>
+</blockquote>
 <h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
 <li><p>令牌桶<br>建立一个带有容量的桶，等速率注入令牌，每次请求在处理前都向桶中尝试获取令牌。如果获得令牌则处理，没获得则直接丢弃。<br>因为令牌桶的容量是有限的，如果桶已经满了，则停止注入令牌。</p>
 </li>
@@ -237,19 +243,24 @@
 <li>池子的设计思想：一个对象的生命周期是创建-应用-销毁。但是创建和销毁会消耗大量的资源。<br>因为对象是由结构体实例化，所以预先开辟一块内存用来存储对象。销毁对象时将对象放入协程池，需要时再从池中直接获得一个对象。<br>池子技术一般用于频繁的创建与销毁对象的后台服务中。</li>
 </ul>
 <blockquote>
-<p>一般不用协程池，因为协程的创建和销毁代价极小。在 golang 中，有使用大小为 32 的协程列表。</p>
+<p>一般不用协程池，因为协程的创建和销毁代价极小。在 golang 中，有使用大小为 32 的协程列表用于协程的调度。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; runtime.gfget 中包含两部分逻辑，它会根据处理器中 gFree 列表中 Goroutine 的数量做出不同的决策：</span><br><span class="line">&#x2F;&#x2F; 当处理器的 Goroutine 列表为空时，会将调度器持有的空闲 Goroutine 转移到当前处理器上，直到 gFree 列表中的 Goroutine 数量达到 32；</span><br><span class="line">&#x2F;&#x2F; 当处理器的 Goroutine 数量充足时，会从列表头部返回一个新的 Goroutine；</span><br><span class="line">func gfget(_p_ *p) *g &#123;</span><br><span class="line">retry:</span><br><span class="line">	if _p_.gFree.empty() &amp;&amp; (!sched.gFree.stack.empty() || !sched.gFree.noStack.empty()) &#123;</span><br><span class="line">		for _p_.gFree.n &lt; 32 &#123;</span><br><span class="line">			gp :&#x3D; sched.gFree.stack.pop()</span><br><span class="line">			if gp &#x3D;&#x3D; nil &#123;</span><br><span class="line">				gp &#x3D; sched.gFree.noStack.pop()</span><br><span class="line">				if gp &#x3D;&#x3D; nil &#123;</span><br><span class="line">					break</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			_p_.gFree.push(gp)</span><br><span class="line">		&#125;</span><br><span class="line">		goto retry</span><br><span class="line">	&#125;</span><br><span class="line">	gp :&#x3D; _p_.gFree.pop()</span><br><span class="line">	if gp &#x3D;&#x3D; nil &#123;</span><br><span class="line">		return nil</span><br><span class="line">	&#125;</span><br><span class="line">	return gp</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; runtime.gfget 中包含两部分逻辑，它会根据处理器中 gFree 列表中 Goroutine 的数量做出不同的决策：</span><br><span class="line">&#x2F;&#x2F; 当处理器的 Goroutine 列表为空时，会将调度器持有的空闲 Goroutine 转移到当前处理器上，直到 gFree 列表中的 Goroutine 数量达到 32；</span><br><span class="line">&#x2F;&#x2F; 当处理器的 Goroutine 数量充足时，会从列表头部返回一个新的 Goroutine；</span><br><span class="line">func gfget(_p_ *p) *g &#123;</span><br><span class="line">retry:</span><br><span class="line">	if _p_.gFree.empty() &amp;&amp; (!sched.gFree.stack.empty() || !sched.gFree.noStack.empty()) &#123;</span><br><span class="line">		for _p_.gFree.n &lt; 32 &#123;</span><br><span class="line">			gp :&#x3D; sched.gFree.stack.pop()</span><br><span class="line">			if gp &#x3D;&#x3D; nil &#123;</span><br><span class="line">				gp &#x3D; sched.gFree.noStack.pop()</span><br><span class="line">				if gp &#x3D;&#x3D; nil &#123;</span><br><span class="line">					break</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			_p_.gFree.push(gp)</span><br><span class="line">		&#125;</span><br><span class="line">		goto retry</span><br><span class="line">	&#125;</span><br><span class="line">	gp :&#x3D; _p_.gFree.pop()</span><br><span class="line">	if gp &#x3D;&#x3D; nil &#123;</span><br><span class="line">		return nil</span><br><span class="line">	&#125;</span><br><span class="line">	return gp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="限流、降级、熔断与削峰"><a href="#限流、降级、熔断与削峰" class="headerlink" title="限流、降级、熔断与削峰"></a>限流、降级、熔断与削峰</h3><ul>
-<li>如果发现对方返回超时率较高则限流</li>
-<li>如果整体服务请求延时高则降级</li>
-<li>如果某链路下游超时严重则熔断</li>
-<li>使用消息队列进行流量削峰</li>
+<li>发送方统计对方服务的延时率，如果超时率增加则主动降低 qps，称为限流；</li>
+<li>接收方统计服务整体延时率，如果超时率超过预设值则主动降级。降级一般先从外围开始降，保证核心服务的正常运行；</li>
+<li>服务下游出现严重超时则主动熔断，保证其他模块不会受到影响；</li>
+<li>某一时间请求出现峰值，则变并行为串行，延长时间进行处理。一般使用消息队列。</li>
 </ul>
-<h3 id="串行无锁：消息队列"><a href="#串行无锁：消息队列" class="headerlink" title="串行无锁：消息队列"></a>串行无锁：消息队列</h3><p>   消息队列一般使用 kafka、RabbitMQ<br>   结构无锁主要是 CAS</p>
+<h3 id="串行无锁：消息队列"><a href="#串行无锁：消息队列" class="headerlink" title="串行无锁：消息队列"></a>串行无锁：消息队列</h3><p>   消息队列一般使用 kafka、RabbitMQ，变并行为串行；<br>   结构无锁主要是 CAS</p>
 <hr>
-<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><h3 id="CAP-和-BASE"><a href="#CAP-和-BASE" class="headerlink" title="CAP 和 BASE"></a>CAP 和 BASE</h3><h3 id="拜占庭将军问题"><a href="#拜占庭将军问题" class="headerlink" title="拜占庭将军问题"></a>拜占庭将军问题</h3><h3 id="分布式中的消息传递"><a href="#分布式中的消息传递" class="headerlink" title="分布式中的消息传递"></a>分布式中的消息传递</h3><h3 id="分布式协议"><a href="#分布式协议" class="headerlink" title="分布式协议"></a>分布式协议</h3><h4 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h4><h4 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h4><hr>
+<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><h3 id="CAP-和-BASE"><a href="#CAP-和-BASE" class="headerlink" title="CAP 和 BASE"></a>CAP 和 BASE</h3><p>   CAP 指的是一致性，可用性和分区容错性；<br>   BASE 指的是基本可用，软状态和最终一致性。</p>
+<h3 id="拜占庭将军问题"><a href="#拜占庭将军问题" class="headerlink" title="拜占庭将军问题"></a>拜占庭将军问题</h3><p>   <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23167269">拜占庭将军问题</a></p>
+<h3 id="分布式中的消息传递"><a href="#分布式中的消息传递" class="headerlink" title="分布式中的消息传递"></a>分布式中的消息传递</h3><p>   推一下前同事的博客 <a target="_blank" rel="noopener" href="https://www.luozhiyun.com/archives/304">常见的分布式协议与算法</a>。</p>
+<h3 id="分布式协议"><a href="#分布式协议" class="headerlink" title="分布式协议"></a>分布式协议</h3><h4 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h4><p>   zk 使用的分布式协议。</p>
+<h4 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h4><p>   consul 和 etcd 使用的分布式协议。</p>
+<hr>
 <h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p>   传统业务架构难以服务海量用户。<br>   传统业务架构具有开发简单、快速、成本低的优点，但是应对海量服务却有些招架不住。一方面，传统架构不能及时适应业务的快速增长，不管是横向扩容或者是纵向扩容，都会伴随配置文件的大量更改。伴随时间的增长，业务的迭代和维护就成为一件颇为麻烦的事。另一方面，如果没有良好的设计，后台模块间很容易相互依赖耦合，一旦出现单点故障，整个后台服务都会出现影响。</p>
 <p>   面对海量服务的业务场景，微服务作为一种设计思想，在后台领域广泛传播，并取得了一定的认可。<br>   但首先需要澄清的是，微服务并不是云服务，也不是任何一种框架。<br>   微服务是一种设计思想，遵循“高内聚，低耦合”的思想，以单一责任原则将传统服务划分为若干模块，佐以注册中心完成服务的注册与发现，模块通过注册中心统一配置和调用，以达到业务拆分的目的。</p>
 <blockquote>
@@ -261,16 +272,33 @@
 <p>   使用微服务将业务拆分有诸多好处。使用 Namespace 调用模块可以隐藏模块的实现细节，服务的扩缩容可以通过服务发现和负载均衡控制；“高内聚，低耦合”的模块有利于开发人员的职责细分，提高协同工作的效率，也降低了修改模块的成本；单一服务出现问题大多不会影响全局服务正常运行。</p>
 <p>   微服务不是软件设计的银弹。<br>   如果微服务的模块功能过于细分，也会对服务的迭代和维护造成颇为麻烦的局面。因为每次的服务注册与发现大多通过注册中心调度，频繁的调用也会给请求链路带来额外的消耗。因为服务涉及的模块和机器较多，追踪问题也变得更加棘手。<br>   因为微服务涉及的模块较多，对于自动化运维也有一定的要求。维护过多的模块会给运维带来额外的工作。</p>
 <hr>
-<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><hr>
+<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><blockquote>
+<p>待总结，思路有点乱。了解的有些零散。<br>   暂时引用一篇文章 <a target="_blank" rel="noopener" href="https://draveness.me/whys-the-design-unstable-infrastructure/">为什么基础服务不应该高可用</a>。</p>
+</blockquote>
+<hr>
 <h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><blockquote>
 <p><em>以下内容我都不会</em></p>
 </blockquote>
-<h3 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h3><h3 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h3><h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><h3 id="HiveSQL"><a href="#HiveSQL" class="headerlink" title="HiveSQL"></a>HiveSQL</h3><h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><h3 id="ElesticSearch"><a href="#ElesticSearch" class="headerlink" title="ElesticSearch"></a>ElesticSearch</h3><hr>
-<h2 id="容器与容器调度"><a href="#容器与容器调度" class="headerlink" title="容器与容器调度"></a>容器与容器调度</h2><h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><h3 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h3><hr>
+<h3 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h3><h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><h3 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h3><h3 id="HiveSQL"><a href="#HiveSQL" class="headerlink" title="HiveSQL"></a>HiveSQL</h3><h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><h3 id="ElesticSearch"><a href="#ElesticSearch" class="headerlink" title="ElesticSearch"></a>ElesticSearch</h3><h3 id="数据仓库，数据中台和数据开发"><a href="#数据仓库，数据中台和数据开发" class="headerlink" title="数据仓库，数据中台和数据开发"></a>数据仓库，数据中台和数据开发</h3><hr>
+<h2 id="容器与容器调度"><a href="#容器与容器调度" class="headerlink" title="容器与容器调度"></a>容器与容器调度</h2><h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><p>   docker 是一种虚拟化/沙箱/沙盒技术。</p>
+<blockquote>
+<p>先写几个关键字。镜像、仓库与容器；docker是用进程伪装的；<br>实现原理：资源隔离<br>cpu和内存隔离 -&gt; cgroups<br>文件隔离 -&gt; rootfs 和 chroot<br>docker 自带调度 Swarm<br>不完全的隔离，比如网络和系统时间没有隔离<br>docker 的优点：轻小快，占用资源少，提供一致性环境<br>dockerfile</p>
+</blockquote>
+<h3 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h3><p>   Google 开源的一种集群调度管理工具。</p>
+<blockquote>
+<p>守护线程<br>两种模式 deployment 和 statful，分别调用无状态容器和有状态；<br>无状态一般指不保存数据，有状态分为两种：一种是容器中保存数据，其次是容器的创建需要符合一定的顺序；<br>两种网络模式： Overlay 和 物理网络（绑定ip）<br>记得刚用 docker 的时候导师过来 debug，ping 了几下就明白了整个 k8s 的网络隔离，又专门画草稿纸讲了一遍</p>
+</blockquote>
+<hr>
 <h2 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h2><h3 id="memcache"><a href="#memcache" class="headerlink" title="memcache"></a>memcache</h3><blockquote>
 <p>不会 &amp;&amp; 没用过</p>
 </blockquote>
-<h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><h4 id="redis-为什么这么快"><a href="#redis-为什么这么快" class="headerlink" title="redis 为什么这么快"></a>redis 为什么这么快</h4><h4 id="redis-的数据结构"><a href="#redis-的数据结构" class="headerlink" title="redis 的数据结构"></a>redis 的数据结构</h4><h4 id="redis-持久化"><a href="#redis-持久化" class="headerlink" title="redis 持久化"></a>redis 持久化</h4><h4 id="redis-集群、分片、哨兵与一致性哈希"><a href="#redis-集群、分片、哨兵与一致性哈希" class="headerlink" title="redis 集群、分片、哨兵与一致性哈希"></a>redis 集群、分片、哨兵与一致性哈希</h4><h4 id="redis-应用"><a href="#redis-应用" class="headerlink" title="redis 应用"></a>redis 应用</h4><h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><blockquote>
+<h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><h4 id="redis-为什么这么快"><a href="#redis-为什么这么快" class="headerlink" title="redis 为什么这么快"></a>redis 为什么这么快</h4><p>   单线程，跳表</p>
+<h4 id="redis-的数据结构"><a href="#redis-的数据结构" class="headerlink" title="redis 的数据结构"></a>redis 的数据结构</h4><p>   string, hash, set, list 和 zset</p>
+<h4 id="redis-持久化"><a href="#redis-持久化" class="headerlink" title="redis 持久化"></a>redis 持久化</h4><p>   AOF 和 RDB</p>
+<blockquote>
+<p>内存快照：直接复制内存中的文件索引</p>
+</blockquote>
+<h4 id="redis-集群、分片、哨兵与一致性哈希"><a href="#redis-集群、分片、哨兵与一致性哈希" class="headerlink" title="redis 集群、分片、哨兵与一致性哈希"></a>redis 集群、分片、哨兵与一致性哈希</h4><h4 id="redis-应用"><a href="#redis-应用" class="headerlink" title="redis 应用"></a>redis 应用</h4><h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><blockquote>
 <p>只见过 &amp;&amp; 没用过</p>
 </blockquote>
 <hr>
@@ -298,8 +326,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/e952a66fe73b/" rel="prev" title="golang入门教程（待补充）">
-      <i class="fa fa-chevron-left"></i> golang入门教程（待补充）
+    <a href="/e952a66fe73b/" rel="prev" title="golang入门教程">
+      <i class="fa fa-chevron-left"></i> golang入门教程
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -360,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%B7%E9%87%8F%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">海量服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">高并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AF%BB%E7%9A%84%E9%93%B6%E5%BC%B9%EF%BC%9A%E7%BC%93%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">高并发读的银弹：缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E4%B8%8E%E9%9B%AA%E5%B4%A9"><span class="nav-number">2.2.</span> <span class="nav-text">穿透、击穿与雪崩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E5%86%99"><span class="nav-number">2.3.</span> <span class="nav-text">高并发写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">限流算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E3%80%81%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">2.5.</span> <span class="nav-text">线程池、连接池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E3%80%81%E9%99%8D%E7%BA%A7%E3%80%81%E7%86%94%E6%96%AD%E4%B8%8E%E5%89%8A%E5%B3%B0"><span class="nav-number">2.6.</span> <span class="nav-text">限流、降级、熔断与削峰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E6%97%A0%E9%94%81%EF%BC%9A%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">2.7.</span> <span class="nav-text">串行无锁：消息队列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP-%E5%92%8C-BASE"><span class="nav-number">3.1.</span> <span class="nav-text">CAP 和 BASE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">拜占庭将军问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92"><span class="nav-number">3.3.</span> <span class="nav-text">分布式中的消息传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.4.</span> <span class="nav-text">分布式协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Paxos"><span class="nav-number">3.4.1.</span> <span class="nav-text">Paxos</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Raft"><span class="nav-number">3.4.2.</span> <span class="nav-text">Raft</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">大数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop"><span class="nav-number">6.1.</span> <span class="nav-text">Hadoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spark"><span class="nav-number">6.2.</span> <span class="nav-text">Spark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapReduce"><span class="nav-number">6.3.</span> <span class="nav-text">MapReduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HiveSQL"><span class="nav-number">6.4.</span> <span class="nav-text">HiveSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zookeeper"><span class="nav-number">6.5.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElesticSearch"><span class="nav-number">6.6.</span> <span class="nav-text">ElesticSearch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%B9%E5%99%A8%E8%B0%83%E5%BA%A6"><span class="nav-number">7.</span> <span class="nav-text">容器与容器调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker"><span class="nav-number">7.1.</span> <span class="nav-text">docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s"><span class="nav-number">7.2.</span> <span class="nav-text">k8s</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NoSQL"><span class="nav-number">8.</span> <span class="nav-text">NoSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#memcache"><span class="nav-number">8.1.</span> <span class="nav-text">memcache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-number">8.2.</span> <span class="nav-text">redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB"><span class="nav-number">8.2.1.</span> <span class="nav-text">redis 为什么这么快</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">8.2.2.</span> <span class="nav-text">redis 的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.2.3.</span> <span class="nav-text">redis 持久化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E9%9B%86%E7%BE%A4%E3%80%81%E5%88%86%E7%89%87%E3%80%81%E5%93%A8%E5%85%B5%E4%B8%8E%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C"><span class="nav-number">8.2.4.</span> <span class="nav-text">redis 集群、分片、哨兵与一致性哈希</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E5%BA%94%E7%94%A8"><span class="nav-number">8.2.5.</span> <span class="nav-text">redis 应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB"><span class="nav-number">8.3.</span> <span class="nav-text">MongoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E9%93%B6%E5%BC%B9"><span class="nav-number">9.</span> <span class="nav-text">没有银弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D"><span class="nav-number">10.</span> <span class="nav-text">人月神话</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%B7%E9%87%8F%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">海量服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">高并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E5%86%99"><span class="nav-number">2.2.</span> <span class="nav-text">高并发写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">限流算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E3%80%81%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">2.4.</span> <span class="nav-text">线程池、连接池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E3%80%81%E9%99%8D%E7%BA%A7%E3%80%81%E7%86%94%E6%96%AD%E4%B8%8E%E5%89%8A%E5%B3%B0"><span class="nav-number">2.5.</span> <span class="nav-text">限流、降级、熔断与削峰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E6%97%A0%E9%94%81%EF%BC%9A%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">2.6.</span> <span class="nav-text">串行无锁：消息队列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP-%E5%92%8C-BASE"><span class="nav-number">3.1.</span> <span class="nav-text">CAP 和 BASE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">拜占庭将军问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92"><span class="nav-number">3.3.</span> <span class="nav-text">分布式中的消息传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.4.</span> <span class="nav-text">分布式协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Paxos"><span class="nav-number">3.4.1.</span> <span class="nav-text">Paxos</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Raft"><span class="nav-number">3.4.2.</span> <span class="nav-text">Raft</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">大数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop"><span class="nav-number">6.1.</span> <span class="nav-text">Hadoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapReduce"><span class="nav-number">6.2.</span> <span class="nav-text">MapReduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spark"><span class="nav-number">6.3.</span> <span class="nav-text">Spark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HiveSQL"><span class="nav-number">6.4.</span> <span class="nav-text">HiveSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zookeeper"><span class="nav-number">6.5.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElesticSearch"><span class="nav-number">6.6.</span> <span class="nav-text">ElesticSearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%EF%BC%8C%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91"><span class="nav-number">6.7.</span> <span class="nav-text">数据仓库，数据中台和数据开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%B9%E5%99%A8%E8%B0%83%E5%BA%A6"><span class="nav-number">7.</span> <span class="nav-text">容器与容器调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker"><span class="nav-number">7.1.</span> <span class="nav-text">docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s"><span class="nav-number">7.2.</span> <span class="nav-text">k8s</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NoSQL"><span class="nav-number">8.</span> <span class="nav-text">NoSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#memcache"><span class="nav-number">8.1.</span> <span class="nav-text">memcache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-number">8.2.</span> <span class="nav-text">redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB"><span class="nav-number">8.2.1.</span> <span class="nav-text">redis 为什么这么快</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">8.2.2.</span> <span class="nav-text">redis 的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.2.3.</span> <span class="nav-text">redis 持久化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E9%9B%86%E7%BE%A4%E3%80%81%E5%88%86%E7%89%87%E3%80%81%E5%93%A8%E5%85%B5%E4%B8%8E%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C"><span class="nav-number">8.2.4.</span> <span class="nav-text">redis 集群、分片、哨兵与一致性哈希</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-%E5%BA%94%E7%94%A8"><span class="nav-number">8.2.5.</span> <span class="nav-text">redis 应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB"><span class="nav-number">8.3.</span> <span class="nav-text">MongoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E9%93%B6%E5%BC%B9"><span class="nav-number">9.</span> <span class="nav-text">没有银弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D"><span class="nav-number">10.</span> <span class="nav-text">人月神话</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

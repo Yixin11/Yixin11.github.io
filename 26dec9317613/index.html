@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="（施工中）标准容器 STL 的内存表示和操作方法，以及相关迭代器和算法相关。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅解标准 STL 容器">
+<meta property="og:url" content="http://yoursite.com/26dec9317613/index.html">
+<meta property="og:site_name" content="mingch">
+<meta property="og:description" content="（施工中）标准容器 STL 的内存表示和操作方法，以及相关迭代器和算法相关。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-20T09:12:16.000Z">
+<meta property="article:modified_time" content="2020-12-20T09:19:26.270Z">
+<meta property="article:author" content="明成">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/26dec9317613/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>浅解标准 STL 容器 | mingch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">mingch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">祈祷着拼搏的心脏与不羁的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section">Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section">Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/26dec9317613/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="明成">
+      <meta itemprop="description" content="初心不失 && 知行合一">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mingch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅解标准 STL 容器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-20 17:12:16 / Modified: 17:19:26" itemprop="dateCreated datePublished" datetime="2020-12-20T17:12:16+08:00">2020-12-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">（施工中）标准容器 STL 的内存表示和操作方法，以及相关迭代器和算法相关。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="施工中"><a href="#施工中" class="headerlink" title="施工中"></a>施工中</h2><p>施工进度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-&gt; vector            100%</span><br><span class="line">-&gt; list               50%</span><br><span class="line">-&gt; deque             100%</span><br><span class="line">-&gt; priority_queue      0%</span><br><span class="line">-&gt; map               100%</span><br><span class="line">-&gt; multimap          100%</span><br><span class="line">-&gt; set                 0%</span><br><span class="line">-&gt; multiset            0%</span><br><span class="line">-&gt; string              0%</span><br><span class="line">-&gt; algorithm           0%</span><br><span class="line">-&gt; iterator            0%</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h2><h3 id="vector-的内存表示"><a href="#vector-的内存表示" class="headerlink" title="vector 的内存表示"></a>vector 的内存表示</h3><p>vector 直译为向量。在数学中，向量可以理解为从某一端点出发，沿某一方向不断延伸的射线。而 vector 也是从某一地址出发，沿内存地址线性增长的一段空间。</p>
+<p>如果将这段连续的空间理解为一个仓库，那么 vector 里的每个元素都相当于仓库里的一件物品。在 vector 里，要求每个元素间是紧凑的，这样只要从空间的首地址偏移物体空间 size 乘以物品个数 n-1，就可以迅速得到第 N 个元素的首地址。这就是 vector 在内存中的空间表示。</p>
+<p>vector 使用三个指针表示这段内存结构：首地址 *start，当前使用的尾地址 *finish 和这段空间的尾地址 *end_of_storage。</p>
+<h3 id="vector-的操作"><a href="#vector-的操作" class="headerlink" title="vector 的操作"></a>vector 的操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">iterator begin();</span><br><span class="line">iterator end();</span><br><span class="line">size_type size();</span><br><span class="line">size_type capacity();</span><br><span class="line">bool empty();</span><br><span class="line">reference operator[](size_type n);</span><br><span class="line">reference front();</span><br><span class="line">reference back();</span><br><span class="line"></span><br><span class="line">void push_back(const T&amp; x);</span><br><span class="line">void pop_back();</span><br><span class="line">iterator erase(iterator position);</span><br><span class="line">void resize(size_type new_size, const T&amp; x);</span><br><span class="line">void clear();</span><br></pre></td></tr></table></figure>
+
+<h3 id="emplace-back"><a href="#emplace-back" class="headerlink" title="emplace_back"></a>emplace_back</h3><p>在 C++ 11 标准中，容器引入转移构造函数 <code>emplace_back()</code>，其实现原理是右值引用。<br>使用 <code>emplace_back()</code> 可以将原有的 <code>push_back()</code> 的原地构造临时对象-&gt;移动对象到 vector 容器-&gt;销毁临时对象的过程变为直接移动对象到容器中，减少临时对象的构造与销毁。</p>
+<hr>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><h3 id="list-的内存表示"><a href="#list-的内存表示" class="headerlink" title="list 的内存表示"></a>list 的内存表示</h3><p>list 在 STL 并不是指链表而是双向链表。在尾节点</p>
+<h3 id="list-的操作"><a href="#list-的操作" class="headerlink" title="list 的操作"></a>list 的操作</h3><hr>
+<h2 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h2><h3 id="deque-的内存表示"><a href="#deque-的内存表示" class="headerlink" title="deque 的内存表示"></a>deque 的内存表示</h3><p>deque 是一种双向开口的连续线性内存空间，支持在头尾两端分别做元素的插入和删除操作。</p>
+<p>deque 与 vector 的最大差异，一是 deque 允许常数时间内对头元素进行插入和删除操作，二是 deque 没有容量的概念，因为它是动态的以分段连续内存空间组成。</p>
+<p>deque 使用一小块连续内存空间作为主控，其中每一个元素都是一个指针，指向另一端较大的连续内存空间，一段较大的内存空间称为缓冲区。缓冲区的大小可以自由设定，默认是 512 byte。</p>
+<p>deque 的迭代器一共8个字节，分别存储 *cur, *first, *last, *node。当迭代器处于缓存边缘的时候，需要通过 *node 取得上一或下一缓冲区地址。</p>
+<p>deque 使用四个指针维护结构，分别是 iterator start, iterator finish, map_pointer map 和 size_type map_size。</p>
+<h3 id="deque-的操作"><a href="#deque-的操作" class="headerlink" title="deque 的操作"></a>deque 的操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">iterator begin();</span><br><span class="line">iterator end();</span><br><span class="line"></span><br><span class="line">reference operator[](size_type n);</span><br><span class="line">reference front();</span><br><span class="line">reference back();</span><br><span class="line">size_type size() const;</span><br><span class="line">size_type max_size() const;</span><br><span class="line">bool empty() const;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority queue"></a>priority queue</h2><h3 id="deque-的内存表示-1"><a href="#deque-的内存表示-1" class="headerlink" title="deque 的内存表示"></a>deque 的内存表示</h3><h3 id="deque-的操作-1"><a href="#deque-的操作-1" class="headerlink" title="deque 的操作"></a>deque 的操作</h3><hr>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><h3 id="map-的内存表示"><a href="#map-的内存表示" class="headerlink" title="map 的内存表示"></a>map 的内存表示</h3><p>map 的特性是，所有的元素都会根据元素的键值自动排序。在 map 中，每一个节点的类型都是 pair。</p>
+<h3 id="map-的操作"><a href="#map-的操作" class="headerlink" title="map 的操作"></a>map 的操作</h3><p>map </p>
+<hr>
+<h2 id="multimap"><a href="#multimap" class="headerlink" title="multimap"></a>multimap</h2><p>multimap 的特性与用法和 map 完全相同，唯一的差别在于它允许键值重复。</p>
+<p>实现方式是 insert 方法封装底层 RB-Tree 时使用 insert_equal() 而不是 insert_unique()。</p>
+<p>遍历方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">multimap&lt;typename, typename&gt; mp;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; solution 1</span><br><span class="line">size_type *entries &#x3D; mp.count(key);</span><br><span class="line">for(auto &amp;entry:entries) &#123;</span><br><span class="line">    &#x2F;&#x2F;do operation</span><br><span class="line">&#125; </span><br><span class="line">&#x2F;&#x2F; solution 2</span><br><span class="line">iterator begin &#x3D; mp.lower_bound(key);</span><br><span class="line">iterator end &#x3D; mp.upper_bound(key);</span><br><span class="line">while(begin !&#x3D; end) &#123;</span><br><span class="line">    &#x2F;&#x2F;do operation</span><br><span class="line">    ++begin;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; solution 3</span><br><span class="line">pair&lt;iteartor, iteratp&gt; pos &#x3D; mp.equal_range(key);</span><br><span class="line">while(pos.first !&#x3D; pos.second) &#123;</span><br><span class="line">    &#x2F;&#x2F;do operation</span><br><span class="line">    ++pos.first;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><hr>
+<h2 id="multiset"><a href="#multiset" class="headerlink" title="multiset"></a>multiset</h2><hr>
+<h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><hr>
+<h2 id="algorithm"><a href="#algorithm" class="headerlink" title="algorithm"></a>algorithm</h2><h3 id="sort"><a href="#sort" class="headerlink" title="sort()"></a>sort()</h3><h3 id="reverse"><a href="#reverse" class="headerlink" title="reverse()"></a>reverse()</h3><h3 id="find"><a href="#find" class="headerlink" title="find()"></a>find()</h3><h3 id="max"><a href="#max" class="headerlink" title="max()"></a>max()</h3><h3 id="min"><a href="#min" class="headerlink" title="min()"></a>min()</h3><hr>
+<h2 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h2><h3 id="迭代器操作"><a href="#迭代器操作" class="headerlink" title="迭代器操作"></a>迭代器操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">operator*</span><br><span class="line">operator-&gt;</span><br><span class="line">operator++</span><br><span class="line">operator--</span><br><span class="line">operator+</span><br><span class="line">operator-</span><br><span class="line">operator+&#x3D;</span><br><span class="line">operator-&#x3D;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="迭代器失效"><a href="#迭代器失效" class="headerlink" title="迭代器失效"></a>迭代器失效</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/9f42eecdd0af/" rel="prev" title="数据结构-LRU">
+      <i class="fa fa-chevron-left"></i> 数据结构-LRU
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%BD%E5%B7%A5%E4%B8%AD"><span class="nav-number">1.</span> <span class="nav-text">施工中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-number">2.</span> <span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-%E7%9A%84%E5%86%85%E5%AD%98%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.1.</span> <span class="nav-text">vector 的内存表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">vector 的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#emplace-back"><span class="nav-number">2.3.</span> <span class="nav-text">emplace_back</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">3.</span> <span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list-%E7%9A%84%E5%86%85%E5%AD%98%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.1.</span> <span class="nav-text">list 的内存表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list-%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.</span> <span class="nav-text">list 的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque"><span class="nav-number">4.</span> <span class="nav-text">deque</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#deque-%E7%9A%84%E5%86%85%E5%AD%98%E8%A1%A8%E7%A4%BA"><span class="nav-number">4.1.</span> <span class="nav-text">deque 的内存表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deque-%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">deque 的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-queue"><span class="nav-number">5.</span> <span class="nav-text">priority queue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#deque-%E7%9A%84%E5%86%85%E5%AD%98%E8%A1%A8%E7%A4%BA-1"><span class="nav-number">5.1.</span> <span class="nav-text">deque 的内存表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deque-%E7%9A%84%E6%93%8D%E4%BD%9C-1"><span class="nav-number">5.2.</span> <span class="nav-text">deque 的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">6.</span> <span class="nav-text">map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#map-%E7%9A%84%E5%86%85%E5%AD%98%E8%A1%A8%E7%A4%BA"><span class="nav-number">6.1.</span> <span class="nav-text">map 的内存表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map-%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">6.2.</span> <span class="nav-text">map 的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multimap"><span class="nav-number">7.</span> <span class="nav-text">multimap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">8.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiset"><span class="nav-number">9.</span> <span class="nav-text">multiset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string"><span class="nav-number">10.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#algorithm"><span class="nav-number">11.</span> <span class="nav-text">algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sort"><span class="nav-number">11.1.</span> <span class="nav-text">sort()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reverse"><span class="nav-number">11.2.</span> <span class="nav-text">reverse()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">11.3.</span> <span class="nav-text">find()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max"><span class="nav-number">11.4.</span> <span class="nav-text">max()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min"><span class="nav-number">11.5.</span> <span class="nav-text">min()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterator"><span class="nav-number">12.</span> <span class="nav-text">iterator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">12.1.</span> <span class="nav-text">迭代器操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88"><span class="nav-number">12.2.</span> <span class="nav-text">迭代器失效</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="明成"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">明成</p>
+  <div class="site-description" itemprop="description">初心不失 && 知行合一</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:xingaz2008@126.com" title="E-Mail → mailto:xingaz2008@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=68190215" title="网抑云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;68190215" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>网抑云</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/innerca" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;innerca" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/mingc0804/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;mingc0804&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Steam</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">明成</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
